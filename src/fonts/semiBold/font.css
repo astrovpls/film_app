@@ -1,0 +1,12 @@
+@font-face {
+  font-family: 'Kontora-SemiBold';
+  src: url('Kontora-SemiBold.eot');
+  src: url('Kontora-SemiBold.eot?#iefix') format('embedded-opentype'),
+       url('Kontora-SemiBold.svg#Kontora-SemiBold') format('svg'),
+       url('Kontora-SemiBold.ttf') format('truetype'),
+       url('Kontora-SemiBold.woff') format('woff'),
+       url('Kontora-SemiBold.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+

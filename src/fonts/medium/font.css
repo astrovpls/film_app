@@ -1,0 +1,12 @@
+@font-face {
+  font-family: 'Kontora-Medium';
+  src: url('Kontora-Medium.eot');
+  src: url('Kontora-Medium.eot?#iefix') format('embedded-opentype'),
+       url('Kontora-Medium.svg#Kontora-Medium') format('svg'),
+       url('Kontora-Medium.ttf') format('truetype'),
+       url('Kontora-Medium.woff') format('woff'),
+       url('Kontora-Medium.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+

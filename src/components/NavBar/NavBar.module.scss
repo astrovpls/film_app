@@ -29,12 +29,16 @@
   & > li {
     margin: 0 0.5rem 0 0;
   }
+  @media only screen and (max-width: 700px) {
+    display: none;
+  }
 }
 
 .navListM {
   justify-content: space-between;
   padding: 0 16px 16px;
-  @media only screen and (max-width: 1200px) {
-    /*Tablets [601px -> 1200px]*/
+  display: none;
+  @media only screen and (max-width: 700px) {
+    display: flex;
   }
 }

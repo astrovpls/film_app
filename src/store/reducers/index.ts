@@ -8,7 +8,7 @@ import fetchReviews from './fetchReviews'
 import fetchTrailer from './fetchTrailer'
 import fetchSimilar from './fetchSimilar'
 
-export default combineReducers({
+const rootReducer = combineReducers({
   fetchCategories,
   fetchData,
   fetchMovie,
@@ -17,3 +17,7 @@ export default combineReducers({
   fetchTrailer,
   fetchSimilar,
 })
+
+export default rootReducer
+
+export type RootState = ReturnType<typeof rootReducer>

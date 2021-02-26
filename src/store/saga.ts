@@ -1,4 +1,5 @@
 import { put, takeLatest } from 'redux-saga/effects'
+import { Services } from './services'
 
 import {
   FETCH_DATA,
@@ -15,7 +16,6 @@ import {
   getMovieRecommendations,
   getMovieReviews,
   getSimilarById,
-
 } from './services'
 
 export function* rootSaga() {
@@ -27,57 +27,61 @@ export function* rootSaga() {
   yield takeLatest(FETCH_SIMILAR.TRIGGER, fetchSimilarById)
 }
 
-export function* fetchData(action) {
+interface Action {
+  payload: Services
+  type: typeof FETCH_DATA
+}
+
+export function* fetchData(action: Action) {
   try {
     const payload = yield getData(action.payload)
     yield put({ type: FETCH_DATA.SUCCESS, payload: payload })
   } catch (e) {
-    yield put({ type: FETCH_DATA.FAILURE, payload: e })
+    yield put({ type: FETCH_DATA.FAILURE, error: e })
   }
 }
 
-export function* fetchMovie(action) {
+export function* fetchMovie(action: Action) {
   try {
     const payload = yield getData(action.payload)
-    yield put({ type: FETCH_DATA.SUCCESS, payload: payload })
+    yield put({ type: FETCH_MOVIE.SUCCESS, payload: payload })
   } catch (e) {
-    yield put({ type: FETCH_DATA.FAILURE, payload: e })
+    yield put({ type: FETCH_MOVIE.FAILURE, error: e })
   }
 }
 
 export function* fetchCategories() {
   try {
     const payload = yield getCategories()
-
     yield put({ type: FETCH_CATEGORIES.SUCCESS, payload: payload })
   } catch (e) {
-    yield put({ type: FETCH_CATEGORIES.FAILURE, payload: e })
+    yield put({ type: FETCH_CATEGORIES.FAILURE, error: e })
   }
 }
 
-export function* fetchRecommendations(action) {
+export function* fetchRecommendations(action: Action) {
   try {
     const payload = yield getMovieRecommendations(action.payload)
     yield put({ type: FETCH_RECOMMENDATIONS.SUCCESS, payload: payload })
   } catch (e) {
-    yield put({ type: FETCH_RECOMMENDATIONS.FAILURE, payload: e })
+    yield put({ type: FETCH_RECOMMENDATIONS.FAILURE, error: e })
   }
 }
 
-export function* fetchReviews(action) {
+export function* fetchReviews(action: Action) {
   try {
     const payload = yield getMovieReviews(action.payload)
     yield put({ type: FETCH_REVIEWS.SUCCESS, payload: payload })
   } catch (e) {
-    yield put({ type: FETCH_REVIEWS.FAILURE, payload: e })
+    yield put({ type: FETCH_REVIEWS.FAILURE, error: e })
   }
 }
 
-export function* fetchSimilarById(action) {
+export function* fetchSimilarById(action: Action) {
   try {
     const payload = yield getSimilarById(action.payload)
     yield put({ type: FETCH_SIMILAR.SUCCESS, payload: payload })
   } catch (e) {
-    yield put({ type: FETCH_SIMILAR.FAILURE, payload: e })
+    yield put({ type: FETCH_SIMILAR.FAILURE, error: e })
   }
 }

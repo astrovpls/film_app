@@ -3,11 +3,16 @@ import Img from '../Img'
 import { Progress } from '../Icons'
 import s from './MovieCard.module.scss'
 import history from '../../history'
-import PropTypes from 'prop-types'
+import { IMovie } from '../../store/services'
 
-const MovieCard = ({ data, className }) => {
+interface Props {
+  data: IMovie,
+  className?: string
+}
+
+const MovieCard: React.FC<Props> = ({ data, className }) => {
   
-  const dateFormat = dateStr => {
+  const dateFormat = (dateStr: string): string => {
     return new Date(dateStr).toLocaleDateString('en-gb', {
       year: 'numeric',
       month: 'long',
@@ -35,11 +40,6 @@ const MovieCard = ({ data, className }) => {
       </div>
     </div>
   )
-}
-
-MovieCard.propTypes = {
-  data: PropTypes.object.isRequired,
-  className: PropTypes.string
 }
 
 export default MovieCard

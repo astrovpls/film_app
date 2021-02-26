@@ -1,12 +1,14 @@
 import s from './Icons.module.scss'
 
-export const Loader = props => {
+interface Icon {
+  className?: string
+}
+
+export const Loader: React.FC<Icon> = props => {
   return (
     <svg
       className={`icon ${props?.className}`}
       xmlns="http://www.w3.org/2000/svg"
-      // width="500"
-      // height="750"
       stroke="#858585"
       viewBox="0 0 500 750"
     >
@@ -60,7 +62,7 @@ export const Loader = props => {
   )
 }
 
-export const EventPlaceholder = props => {
+export const EventPlaceholder: React.FC<Icon> = props => {
   return (
     <svg
       className={`icon ${props?.className}`}
@@ -81,7 +83,7 @@ export const EventPlaceholder = props => {
   )
 }
 
-export const ImagePlaceholder = props => (
+export const ImagePlaceholder: React.FC<Icon> = props => (
   <svg
     className={`icon ${props?.className}`}
     xmlns="http://www.w3.org/2000/svg"
@@ -99,7 +101,12 @@ export const ImagePlaceholder = props => (
   </svg>
 )
 
-export const Progress = ({ className, percentage = null }) => {
+interface Progress {
+  className?: string,
+  percentage?: number
+}
+
+export const Progress: React.FC<Progress> = ({ className, percentage = 0 }) => {
   const radius = 28
   const circumference = 6.28 * radius
   const part = percentage

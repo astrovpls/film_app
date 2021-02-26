@@ -1,12 +1,25 @@
-export default (TYPE) => {
+import { Reducer } from 'redux';
 
-  const INITIAL_STATE = {
-    data: {},
+interface ActionTypes {
+  TRIGGER: string,
+  SUCCESS: string,
+  FAILURE: string,
+}
+
+export default <T>(TYPE: ActionTypes) => {
+
+  interface Action {
+    payload: T
+    error: string
+    type: any
+  }
+  const initialState = {
+    data: {} as T,
     loading: false, //Store of loading status.
     error: '', //Store errors.
   }
 
-  const reducer = (state = INITIAL_STATE, action) => {
+  const reducer: Reducer<typeof initialState, Action> = (state = initialState, action) => {
     switch (action.type) {
       case TYPE.TRIGGER:
         return {
@@ -22,7 +35,7 @@ export default (TYPE) => {
       case TYPE.FAILURE:
         return {
           ...state,
-          error: action.payload,
+          error: action.error,
           loading: false,
         }
       default:

@@ -3,16 +3,21 @@ import s from './MoviePage.module.scss'
 import Img from '../../components/Img'
 import MovieCard from '../../components/MovieCard'
 import ScrollContainer from 'react-indiana-drag-scroll'
+import { RootState } from '../../store/reducers'
 import { Progress } from '../../components/Icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { FETCH_MOVIE, FETCH_SIMILAR } from '../../store/types'
 import { useParams } from 'react-router-dom'
 
-const MoviePage = () => {
-  const [accentColor, setColor] = useState()
-  const { id } = useParams()
-  const fetchMovie = useSelector(state => state.fetchData)
-  const fetchSimilar = useSelector(state => state.fetchSimilar)
+interface ParamTypes {
+  id: string
+}
+
+const MoviePage: React.FC = () => {
+  const [accentColor, setColor] = useState<number[] | undefined>([])
+  const { id } = useParams<ParamTypes>()
+  const fetchMovie = useSelector((state: RootState) => state.fetchMovie)
+  const fetchSimilar = useSelector((state: RootState) => state.fetchSimilar)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -20,18 +25,22 @@ const MoviePage = () => {
     dispatch({ type: FETCH_SIMILAR.TRIGGER, payload: id })
   }, [dispatch, id])
 
-
   const Description = () => {
-    const colorValue =
-      Array.isArray(accentColor) && accentColor.length
-        ? Math.max(...accentColor.map(el => el / 2.55)).toFixed(1)
-        : null
-
-    const getTextColor =
-      colorValue > 50 ? s['description--dark'] : s['description--light']
+    const getTextColor = () => {
+      if (Array.isArray(accentColor) && accentColor.length) {
+        const colorValue = parseFloat(
+          Math.max(...accentColor.map(el => el / 2.55)).toFixed(1)
+        )
+        return colorValue > 50
+          ? s['description--dark']
+          : s['description--light']
+      } else {
+        return s['description--dark']
+      }
+    }
 
     return (
-      <div className={[s.description, getTextColor].join(' ')}>
+      <div className={[s.description, getTextColor()].join(' ')}>
         <div className={s.title}>
           {fetchMovie.data.title}
           <span className={s.date}>
@@ -41,7 +50,11 @@ const MoviePage = () => {
         </div>
         <div className={s.info}>
           <span>{fetchMovie.data.release_date.split('-').join('/')}</span>
-          <span>{fetchMovie.data.genres.map(el => el.name).join(', ')}</span>
+          <span>
+            {fetchMovie.data.genres
+              .map((el: { name: string }) => el.name)
+              .join(', ')}
+          </span>
           <span>{`${(fetchMovie.data.runtime / 60) | 0}h ${
             fetchMovie.data.runtime % 60
           }m`}</span>
@@ -90,7 +103,7 @@ const MoviePage = () => {
         </header>
         <div className={s.additional}>
           <div className={s.similar}>
-            <ScrollContainer vertical={false} >
+            <ScrollContainer vertical={false}>
               <div className={s.similarScroll}>
                 {fetchSimilar.data.results.map(el => {
                   return <MovieCard data={el} className={s.movieCard} />

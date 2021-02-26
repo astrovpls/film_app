@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 const SearchPage = () => {
   return (
@@ -8,7 +7,5 @@ const SearchPage = () => {
     </div>
   );
 };
-
-SearchPage.propTypes = {};
 
 export default SearchPage;

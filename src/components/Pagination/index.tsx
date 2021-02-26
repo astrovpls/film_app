@@ -3,19 +3,33 @@ import { Link } from 'react-router-dom'
 import s from './Pagination.module.scss'
 import PropTypes from 'prop-types'
 
-const Pagination = ({ current, total, link }) => {
+interface Props {
+  current: number
+  total: number
+  link: string
+}
+
+const Pagination = ({ current, total, link }: Props) => {
   
-  const range = (start, end) => {
+  const range = (start: number, end: number) => {
     return Array(end - start + 1)
-      .fill()
+      .fill(0)
       .map((_, idx) => start + idx)
   }
 
-  const getRange = (currentPage, totalPages, pageNeighbours = 2, leftArrow, rightArrow) => {
+  // TODO move logic to separate file
+  const getRange = (
+    currentPage: number,
+    totalPages: number,
+    pageNeighbours?: number,
+    leftArrow?: string,
+    rightArrow?: string
+  ) => {
+    pageNeighbours = pageNeighbours ? pageNeighbours : 2 
     /*
-     * totalNumbers: кооичество отображаемых страниц
+     * totalNumbers: количество отображаемых страниц
      * totalBlocks: totalNumbers + 2 (кнопки влево, вправо)
-    */
+     */
     const totalNumbers = pageNeighbours * 2
     const totalBlocks = totalNumbers + 2
 
@@ -28,7 +42,7 @@ const Pagination = ({ current, total, link }) => {
        * hasLeftSpill: есть доступные страницы слева
        * hasRightSpill: есть доступные страницы справа
        * spillOffset: количество доступных страниц слева или справа
-      */
+       */
       const hasLeftSpill = startPage > 2
       const hasRightSpill = totalPages - endPage > 1
       const spillOffset = totalNumbers - pages.length
@@ -37,21 +51,21 @@ const Pagination = ({ current, total, link }) => {
         // случай (1) < {5 6} [7] {8 9} (10)
         case hasLeftSpill && !hasRightSpill: {
           const extraPages = range(startPage - spillOffset, startPage - 1)
-          pages = ['LEFT', ...extraPages, ...pages]
+          pages = [-999, ...extraPages, ...pages]
           break
         }
 
         // случай (1) {2 3} [4] {5 6} > (10)
         case !hasLeftSpill && hasRightSpill: {
           const extraPages = range(endPage + 1, endPage + spillOffset + 2)
-          pages = [...pages, ...extraPages, 'RIGHT']
+          pages = [...pages, ...extraPages, 999]
           break
         }
 
         // случай (1) < {4 5} [6] {7 8} > (10)
         case hasLeftSpill && hasRightSpill:
         default: {
-          pages = ['LEFT', ...pages, 'RIGHT']
+          pages = [-999, ...pages, 999]
           break
         }
       }
@@ -60,9 +74,19 @@ const Pagination = ({ current, total, link }) => {
     }
   }
 
-  return <div className={s.pagination}>
-    {getRange(current, total).map((el, index) => <Link to={`${link}?page=${el}`} className={current === el ? s.active : undefined} key={index}>{el}</Link>)}
-  </div>
+  return (
+    <div className={s.pagination}>
+      {getRange(current, total)?.map((el, index) => (
+        <Link
+          to={`${link}?page=${el}`}
+          className={current === el ? s.active : undefined}
+          key={index}
+        >
+          {el}
+        </Link>
+      ))}
+    </div>
+  )
 }
 
 Pagination.propTypes = {

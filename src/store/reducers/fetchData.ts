@@ -3,4 +3,6 @@ import {
 } from '../types'
 import createFetchReducer from './createFetchReducer'
 
-export default createFetchReducer(TYPE)
+import { IMovieList } from '../services'
+
+export default createFetchReducer<IMovieList>(TYPE)

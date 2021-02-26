@@ -2,9 +2,13 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import s from './NavBar.module.scss'
 
+interface Props {
+  className: string
+}
+
 const NavBar = () => {
   
-  const NavList = ({ className }) => (
+  const NavList: React.FC<Props> = ({ className }) => (
     <ul className={[s.navList, className].join(' ')}>
       <li>
         <Link to="/list/popular">Popular</Link>
@@ -29,7 +33,7 @@ const NavBar = () => {
           Search
         </Link>
       </nav>
-      <NavList className={s.navList}/>
+      <NavList className={s.navListM}/>
     </>
   )
 }

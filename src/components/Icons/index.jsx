@@ -5,13 +5,13 @@ export const Loader = props => {
     <svg
       className={`icon ${props?.className}`}
       xmlns="http://www.w3.org/2000/svg"
-      width="150"
-      height="150"
+      // width="500"
+      // height="750"
       stroke="#858585"
-      viewBox="0 0 150 150"
+      viewBox="0 0 500 750"
     >
       <g fill="none" fillRule="evenodd" strokeWidth="2">
-        <circle cx="75" cy="75" r="1">
+        <circle cx="250" cy="375" r="1">
           <animate
             attributeName="r"
             begin="0s"
@@ -33,7 +33,7 @@ export const Loader = props => {
             values="1; 0"
           ></animate>
         </circle>
-        <circle cx="75" cy="75" r="1">
+        <circle cx="250" cy="375" r="1">
           <animate
             attributeName="r"
             begin="-0.9s"
@@ -65,10 +65,10 @@ export const EventPlaceholder = props => {
     <svg
       className={`icon ${props?.className}`}
       xmlns="http://www.w3.org/2000/svg"
-      width="310"
-      height="310"
+      width="500"
+      height="750"
       fill="none"
-      viewBox="0 0 310 310"
+      viewBox="0 0 500 750"
     >
       <path
         stroke="#4A5568"
@@ -81,10 +81,30 @@ export const EventPlaceholder = props => {
   )
 }
 
+export const ImagePlaceholder = props => (
+  <svg
+    className={`icon ${props?.className}`}
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 500 750"
+  >
+    <path fill="#fff" d="M0 0H500V750H0z"></path>
+    <path
+      stroke="#4A5568"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="16"
+      d="M175.333 279v42.667V279zM154 300.333h42.667H154zm32 128V471v-42.667zm-21.333 21.334h42.666-42.666zm96-170.667l24.384 73.141L346 375l-60.949 22.859L260.667 471l-24.384-73.141L175.333 375l60.95-22.859L260.667 279z"
+    ></path>
+  </svg>
+)
+
 export const Progress = ({ className, percentage = null }) => {
   const radius = 28
-  const circumference =  6.28 * radius
-  const part = percentage ? circumference * (1 - percentage / 100) : circumference
+  const circumference = 6.28 * radius
+  const part = percentage
+    ? circumference * (1 - percentage / 100)
+    : circumference
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -108,11 +128,15 @@ export const Progress = ({ className, percentage = null }) => {
         strokeLinejoin="round"
         strokeWidth="4"
       ></circle>
-      
+
       <circle cx="32" cy="32" r="27" fill="#F4F5F7"></circle>
-      <text xmlns="http://www.w3.org/2000/svg" x={percentage === 100 || !percentage ? '11' : '17'} y="41">
+      <text
+        xmlns="http://www.w3.org/2000/svg"
+        x={percentage === 100 || !percentage ? '11' : '17'}
+        y="41"
+      >
         {percentage ? percentage : 'N/A'}
       </text>
     </svg>
-  );
+  )
 }

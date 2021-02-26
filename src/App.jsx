@@ -6,11 +6,6 @@ import SearchPage from './containers/SearchPage'
 import MoviePage from './containers/MoviePage'
 
 const App = () => {
-  // const dispatch = useDispatch()
-
-  // useEffect(() => {
-  //   dispatch({ type: FETCH_DATA.TRIGGER, payload: 'popular' })
-  // }, [])
   return (
     <Layout>
       <Switch>
@@ -20,14 +15,14 @@ const App = () => {
         <Route exact strict path="/list/:type">
           <HomePage />
         </Route>
-        <Route exact strict path="/search">
-          <SearchPage />
-        </Route>
         <Route exact strict path="/genre/:category">
           <HomePage />
         </Route>
         <Route exact strict path="/search/:query">
           <HomePage />
+        </Route>
+        <Route exact strict path="/search">
+          <SearchPage />
         </Route>
         <Route path="/movie/:id">
           <MoviePage />

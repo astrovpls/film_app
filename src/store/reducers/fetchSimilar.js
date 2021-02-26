@@ -1,5 +1,5 @@
 import {
-  FETCH_RECOMMENDATIONS as TYPE
+  FETCH_SIMILAR as TYPE
 } from '../types'
 import createFetchReducer from './createFetchReducer'
 

@@ -1,46 +1,75 @@
-# Getting Started with Create React App
+# React + Mobx + SSR boilerplate
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Description
 
-## Available Scripts
+Minimalistic Isomorphic TODO list application already set up with:
+- React 17 + React Router 5
+- MobX 6 (state management library)
+- Server side rendering with NodeJS + Express
+- reactive approach to update component state 
+- TypeScript
+- Sass compilation
+- Webpack with a configurations for both dev and prod environments
+- HMR + React HOT reload + Sass hot reload
+- Unit testing with Jest
+- Custom VScode config for debugging
 
-In the project directory, you can run:
+This app doesn't add any unuseful complexity, just a simple TODO list implemented following the best practice with some useful npm tasks to build and run your app
 
-### `yarn start`
+### Build and run
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```
+yarn install or npm install 
+```
 
-### `yarn test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+npm run build or npm run build:prod
+```
 
-### `yarn build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+npm run start or npm run start:prod
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Dev and Prod
+The starter comes with two webpack configurations for development and production environments.
+To speed up the dev environment it comes with HMR enabled and already configured with Sass Hot reload and React hot loader.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `yarn eject`
+## Flow
+The project relies on <a href="https://github.com/flowtype/flow-bin#readme">Flow</a> being installed globally, if you're experiencing any syntax errors just make sure you have flow installed (and if you're using VsCode add even the proper <a href="https://github.com/flowtype/flow-for-vscode">flow extension</a>).
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Basic folder structure
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- <img src="http://icons.iconarchive.com/icons/dtafalonso/yosemite-flat/256/Folder-icon.png" width="15" /> <a href="https://mobx.js.org/best/store.html">Stores</a>
+   * <img src="http://icons.iconarchive.com/icons/dtafalonso/yosemite-flat/256/Folder-icon.png" width="15" /> Domain:
+       stores the data which'll be needed in your app. (user data, for example todos array)
+   * <img src="http://icons.iconarchive.com/icons/dtafalonso/yosemite-flat/256/Folder-icon.png" width="15" /> View/UI:
+       stores the data which'll be needed to present your app (loading, error variables..)
+       if the state of the store is too simple there's no need of a specific component ui-store.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- <img src="http://icons.iconarchive.com/icons/dtafalonso/yosemite-flat/256/Folder-icon.png" width="15" /> Models: Here you can define the data models
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- <img src="http://icons.iconarchive.com/icons/dtafalonso/yosemite-flat/256/Folder-icon.png" width="15" /> Services: Here you can make services like api calls, that will be used directly by the stores
 
-## Learn More
+- <img src="http://icons.iconarchive.com/icons/dtafalonso/yosemite-flat/256/Folder-icon.png" width="15" /> Components: Container or Smart Components, Dumb or presentational components
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- <img src="http://icons.iconarchive.com/icons/dtafalonso/yosemite-flat/256/Folder-icon.png" width="15" /> Style: any scss must be placed in the style folder and must have the prefix _ if is a partial file
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+
+## Debug
+you can debug both the client and the server, there's already a custom vscode launch.json configuration, so you just need to run the debugger and you should be ready to go
+
+- Client
+
+<img src="https://i.imgur.com/Yz28YRS.gif" />
+
+- Server
+
+<img src="https://i.imgur.com/Bm39QxR.gif" />
+
+
+## License
+MIT 2018 License <a href="https://github.com/kinotto">Karim Abdelcadir</a>

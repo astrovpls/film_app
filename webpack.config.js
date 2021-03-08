@@ -1,73 +1,68 @@
-const webpack = require('webpack')
 const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const isProduction = process.env.NODE_ENV === 'production'
 
-module.exports = (env = {}) => {
-  const baseConfig = {
-    //external source maps in prod to reduce bundle size but still allow debugging!
-    devtool: isProduction ? 'source-map' : 'eval-source-map',
-    entry: './src/client/index.js',
-    output: {
-      path: path.resolve(__dirname, './dist'),
-      filename: 'bundle.js',
-      publicPath: '/',
-    },
-    module: {
-      rules: [
+module.exports = env => {
+  const isDev = env === 'dev'
+  const modules = {
+    js: {
+      test: /\.ts(x?)$/,
+      exclude: /node_modules/,
+      use: [
         {
-          test: /\.js$/,
-          use: {
-            loader: 'babel-loader',
-          },
-        },
-        {
-          test: /\.scss/,
-          use: [
-            MiniCssExtractPlugin.loader,
-            // 'style-loader',
-            {
-              loader: 'css-loader',
-              options: {
-                modules: true,
-              },
-            },
-            'sass-loader',
-          ],
+          loader: 'ts-loader',
         },
       ],
     },
-    plugins: [
-      new MiniCssExtractPlugin({
-        filename: 'index.css',
-      }),
-    ],
-    resolve: {
-      extensions: ['.js', '.jsx'],
+    stylus: {
+      test: /\.scss$/,
+      use: [
+        { loader: 'style-loader' }, // to inject the result into the DOM as a style block
+        { loader: 'css-modules-typescript-loader' }, // to generate a .d.ts module next to the .scss file (also requires a declaration.d.ts with "declare modules '*.scss';" in it to tell TypeScript that "import styles from './styles.scss';" means to load the module "./styles.scss.d.td")
+        { loader: 'css-loader', options: { modules: true } }, // to convert the resulting CSS to Javascript to be bundled (modules:true to rename CSS classes in output to cryptic identifiers, except if wrapped in a :global(...) pseudo class)
+        { loader: 'sass-loader' }, // to convert SASS to CSS
+        // NOTE: The first build after adding/removing/renaming CSS classes fails, since the newly generated .d.ts typescript module is picked up only later
+      ],
+    },
+    stylusIsomorph: {
+      test: /\.scss$/,
+      use: [
+        MiniCssExtractPlugin.loader, //1
+        {
+          loader: 'css-loader', //2
+          options: {
+            import: false,
+            modules: true,
+          },
+        },
+        'sass-loader', //3
+      ],
+    },
+    css: {
+      test: /\.scss/,
+      use: [
+        MiniCssExtractPlugin.loader,
+        // 'style-loader',
+        {
+          loader: 'css-loader',
+          options: {
+            modules: true,
+          },
+        },
+        'sass-loader',
+      ],
+    }
+  }
+
+  const resolve = {
+    extensions: ['.ts', '.tsx', '.js', '.jsx'],
+    alias: {
+      App: path.resolve(__dirname, 'src/App/'),
+      Pages: path.resolve(__dirname, 'src/Pages/'),
     },
   }
 
-  if (!isProduction) {
-    baseConfig.devServer = {
-      inline: true,
-      compress: true,
-      port: 3010,
-      hot: true,
-      open: true,
-      proxy: {
-        //forward all routes to local express server and still keep hot-module-replacement from webpack
-        '/**': {
-          target: `http://localhost:3011`,
-        },
-      },
-    }
-    baseConfig.plugins = [
-      new webpack.HotModuleReplacementPlugin(),
-      new MiniCssExtractPlugin({
-        filename: 'index.css',
-      }),
-    ]
+  return {
+    modules,
+    resolve,
   }
-
-  return baseConfig
 }

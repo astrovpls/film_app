@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "jsx": "react",
+        "noEmitOnError": true,
+        "noUnusedLocals": true,
+        "removeComments": true,
+        "noImplicitAny": true,
+        "esModuleInterop": true,
+        "baseUrl": "./",
+        "plugins": [{ "name": "typescript-plugin-css-modules" }],
+        "paths": {
+            "App": ["src/App"],
+            "Pages/*": ["src/Pages/*"],
+        }
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}

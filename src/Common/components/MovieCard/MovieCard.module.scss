@@ -1,0 +1,41 @@
+@import '../../variables.scss';
+
+.movieCard {
+  flex: 1 1 100%;
+  margin: 8px;
+  background-color: $colorWhite;
+  border-radius: $rounded;
+  box-shadow: $shadowSubtle;
+  cursor: pointer;
+  & > .poster {
+    border-radius: $rounded $rounded 0 0;
+    user-select: none;
+    position: relative;
+    height: 0;
+    padding-bottom:150%;
+    & > .image {
+      border-radius: 0.5rem 0.5rem 0 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      position: absolute;
+      aspect-ratio: 1 / 1.5;
+    }
+  }
+  & > .description {
+    padding: 30px 8px 8px 8px;
+    & > .movieTitle {
+      font-weight: $textBold;
+    }
+    & > .movieDate {
+      font-size: 14px;
+      color: $colorGray-400;
+    }
+  }
+}
+
+.progress {
+  position: absolute;
+  left: 0;
+  bottom: -28px;
+}
